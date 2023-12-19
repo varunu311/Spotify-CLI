@@ -10,7 +10,7 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,
                                                redirect_uri=redirect_uri,
                                                scope="user-read-playback-state,user-modify-playback-state"))
 
-song_name = input("Enter the name of the song you want to play: ")
+song_name = input("Play: ")
 results = sp.search(q=song_name, limit=1)
 track_id = results['tracks']['items'][0]['uri']
 sp.start_playback(uris=[track_id])
