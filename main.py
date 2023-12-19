@@ -47,14 +47,40 @@ def toggle_shuffle():
         return
     sp.shuffle(not current_playback['shuffle_state'])
 
+def play_previous_track():
+    sp.previous_track()
+
+def play_next_track():
+    sp.next_track()
+
+def toggle_playback():
+    current_playback = sp.current_playback()
+    if current_playback is None or not current_playback['is_playing']:
+        sp.start_playback()
+    else:
+        sp.pause_playback()
+
+def add_song_to_queue(song_name):
+    results = sp.search(q=song_name, limit=1)
+    track_id = results['tracks']['items'][0]['uri']
+    sp.add_to_queue(uri=track_id)
+
 if __name__ == '__main__':
     command = input("Enter your command: ")
 
-    if command[:2] == '-a':
+    if command.startswith('-a'):
         play_random_song_by_artist(command[3:])
-    elif command[:2] == '-l':
+    elif command.startswith('-l'):
         toggle_loop()
-    elif command[:2] == '-s':
+    elif command.startswith('-s'):
         toggle_shuffle()
+    elif command.startswith('-prev'):
+        play_previous_track()
+    elif command.startswith('-next'):
+        play_next_track()
+    elif command.startswith('-pause') or command.startswith('-play'):
+        toggle_playback()
+    elif command.startswith('-q'):
+        add_song_to_queue(command[3:])
     else:
         play_song(command)
