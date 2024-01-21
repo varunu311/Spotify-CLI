@@ -1,0 +1,28 @@
+on run {input, parameters}
+	-- Check if Spotify is running; if not, start it
+	tell application "System Events"
+		if not (exists (process "Spotify")) then
+			tell application "Spotify" to activate
+			delay 5 -- wait for Spotify to open
+		end if
+	end tell
+	
+	-- Play music if Spotify is not already playing
+	tell application "Spotify"
+		if player state is not playing then
+			play
+		end if
+	end tell
+	
+	-- Rest of the script
+	set songName to text returned of (display dialog "What to play?" default answer "")
+	
+	if songName is not equal to "" then
+		set command to "/opt/homebrew/bin/python3.11 /Users/boop/code/python/Python-Spotify-CLI/main.py " & songName
+		do shell script command
+	else
+		display dialog "No song name entered. Please enter a song name."
+	end if
+	
+	return input
+end run
