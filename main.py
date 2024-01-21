@@ -4,8 +4,8 @@ import sys  # Import sys to use sys.argv
 from spotipy.oauth2 import SpotifyOAuth
 
 # Your Spotify credentials and setup
-client_id = "8052d2aea6234819887ed073fbd4837f"
-client_secret = "3f5086a06cfa46a086ed52aa865bfcda"
+client_id = "YourClientID"
+client_secret = "YourClientSecret"
 redirect_uri = "http://localhost:3000/callback"
 
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,
